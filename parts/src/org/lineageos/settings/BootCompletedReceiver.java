@@ -25,9 +25,11 @@ import android.util.Log;
 import android.provider.Settings;
 
 import org.lineageos.settings.utils.FileUtils;
+import org.lineageos.settings.dirac.DiracUtils;
+
 import org.lineageos.settings.doze.DozeUtils;
 import org.lineageos.settings.thermal.ThermalUtils;
- import org.lineageos.settings.refreshrate.RefreshUtils;
+import org.lineageos.settings.refreshrate.RefreshUtils;
 import org.lineageos.settings.touchsampling.TouchSamplingUtils;
 
 public class BootCompletedReceiver extends BroadcastReceiver implements Controller {
@@ -63,6 +65,7 @@ public class BootCompletedReceiver extends BroadcastReceiver implements Controll
             FileUtils.setValue(KCAL_HUE, Settings.Secure.getInt(context.getContentResolver(),
                     PREF_HUE, HUE_DEFAULT));
         }
+        DiracUtils.initialize();
         DozeUtils.checkDozeService(context);
         ThermalUtils.startService(context);
         RefreshUtils.startService(context);
