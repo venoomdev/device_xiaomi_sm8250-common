@@ -39,12 +39,14 @@ public class DiracSettingsFragment extends PreferenceFragment implements
 
     private static final String PREF_HEADSET = "dirac_headset_pref";
     private static final String PREF_PRESET = "dirac_preset_pref";
+    private static final String PREF_SCENE = "scenario_selection";
 
     private TextView mTextView;
     private View mSwitchBar;
 
     private ListPreference mHeadsetType;
     private ListPreference mPreset;
+    private ListPreference mScenes;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -62,6 +64,10 @@ public class DiracSettingsFragment extends PreferenceFragment implements
         mPreset = (ListPreference) findPreference(PREF_PRESET);
         mPreset.setOnPreferenceChangeListener(this);
         mPreset.setEnabled(enhancerEnabled);
+
+        mHeadsetType = (ListPreference) findPreference(PREF_SCENE);
+        mHeadsetType.setOnPreferenceChangeListener(this);
+        mHeadsetType.setEnabled(enhancerEnabled);
     }
 
     @Override
@@ -103,6 +109,9 @@ public class DiracSettingsFragment extends PreferenceFragment implements
             case PREF_PRESET:
                 DiracUtils.setLevel(String.valueOf(newValue));
                 return true;
+            case PREF_SCENE:
+                DiracUtils.setScenario(Integer.parseInt(newValue.toString()));
+                return true;
             default:
                 return false;
         }
@@ -117,6 +126,7 @@ public class DiracSettingsFragment extends PreferenceFragment implements
 
         mHeadsetType.setEnabled(isChecked);
         mPreset.setEnabled(isChecked);
+        mScenes.setEnabled(isChecked);
     }
 
     @Override
